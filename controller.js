@@ -14,7 +14,11 @@ var view = {
                     view.update(view.getHash(), false);
                 }
                 for (i = 0; i < handles.length; i += 1) {
-                    handles[i].addEventListener('click', view.trigger);
+                    if (handles[i].addEventListener) {
+                        handles[i].addEventListener('click', view.trigger)
+                    } else if (handles[i].attachEvent) {
+                        handles[i].attachEvent('onclick', view.trigger);
+                    }
                 }
 
                 window.onhashchange = function() {
@@ -35,32 +39,47 @@ var view = {
         var temp = document.createElement("iframe"),
             frame = document.getElementById(view.routes.view),
             parent = frame.parentNode;
-        temp.src = view.routes.exceptions[hashValue];
+        if (view.routes.exceptions[hashValue]) {
+            temp.src = view.routes.exceptions[hashValue];
+        } else {
+            temp.src = view.routes.path + '/' + hashValue + '.html' || view.routes.index.location
+        }
         temp.id = view.routes.view;
 
         parent.replaceChild(temp, frame);
-        temp.contentWindow.onresize = function() {
-            view.sizeFrame(view.routes.view);
-            console.log('ok')
-        };
-        if (temp.contentWindow.readyState == "complete") {
-            view.sizeFrame(view.routes.view);
-        } else {
-            temp.contentWindow.addEventListener("load", function() {
-                setTimeout(view.sizeFrame(view.routes.view), 0);
-            });
-        }
 
+        if (view.routes.autoSize == true) {
+            temp.contentWindow.onresize = function() {
+                view.sizeFrame(view.routes.view);
+            };
+            if (temp.contentWindow.readyState == "complete") {
+                view.sizeFrame(view.routes.view);
+            } else {
+                if (temp.addEventListener) {
+                    temp.contentWindow.addEventListener("load", function() {
+                        setTimeout(view.sizeFrame(view.routes.view), 0);
+                    });
+                } else if (temp.attachEvent) {
+                    temp.contentWindow.attachEvent("onload", function() {
+                        view.sizeFrame(view.routes.view)
+                    });
+                }
+
+            }
+        }
         if (flag) {
             view.setHash(hashValue);
         }
-
-
-
     },
 
-    trigger: function() {
-        var link = this.getAttribute('data-link');
+    trigger: function(event) {
+        if (!event) {
+            event = window.event;
+        }
+
+        var caller = event.target || event.srcElement,
+            link = caller.getAttribute('data-link');
+
         view.update(link, true);
     },
 
@@ -75,7 +94,7 @@ var view = {
 
     sizeFrame: function(elem) {
         var el = document.getElementById(elem);
-        el.height = (el.contentWindow.document.body.offsetHeight) + "px";
+        el.height = (el.contentWindow.document.body.scrollHeight) + "px";
     }
 
 };
