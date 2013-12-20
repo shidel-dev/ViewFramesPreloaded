@@ -1,6 +1,6 @@
 var view = {
-    create: function(routes) {
-        view.routes = routes;
+    create: function(setup) {
+        view.setup = setup;
         var readyStateCheckInterval = setInterval(function() {
             if (document.readyState === "complete") {
                 clearInterval(readyStateCheckInterval);
@@ -9,7 +9,7 @@ var view = {
                     i,
                     flag = false;
                 if (hashValue === '') {
-                    view.update(routes.index.name, true);
+                    view.update(setup.index.name, true);
                 } else {
                     view.update(view.getHash(), false);
                 }
@@ -37,31 +37,31 @@ var view = {
 
     update: function(hashValue, flag) {
         var temp = document.createElement("iframe"),
-            frame = document.getElementById(view.routes.view),
+            frame = document.getElementById(view.setup.view),
             parent = frame.parentNode;
-        if (view.routes.exceptions[hashValue]) {
-            temp.src = view.routes.exceptions[hashValue];
+        if (view.setup.exceptions[hashValue]) {
+            temp.src = view.setup.exceptions[hashValue];
         } else {
-            temp.src = view.routes.path + '/' + hashValue + '.html' || view.routes.index.location
+            temp.src = view.setup.path + '/' + hashValue + '.html' || view.setup.index.location
         }
-        temp.id = view.routes.view;
+        temp.id = view.setup.view;
 
         parent.replaceChild(temp, frame);
 
-        if (view.routes.autoSize == true) {
+        if (view.setup.autoSize == true) {
             temp.contentWindow.onresize = function() {
-                view.sizeFrame(view.routes.view);
+                view.sizeFrame(view.setup.view);
             };
             if (temp.contentWindow.readyState == "complete") {
-                view.sizeFrame(view.routes.view);
+                view.sizeFrame(view.setup.view);
             } else {
                 if (temp.addEventListener) {
                     temp.contentWindow.addEventListener("load", function() {
-                        setTimeout(view.sizeFrame(view.routes.view), 0);
+                        setTimeout(view.sizeFrame(view.setup.view), 0);
                     });
                 } else if (temp.attachEvent) {
                     temp.contentWindow.attachEvent("onload", function() {
-                        view.sizeFrame(view.routes.view)
+                        view.sizeFrame(view.setup.view)
                     });
                 }
 
