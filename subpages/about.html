@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>About viewFrames</title>
+
+
+    <base target="_parent">
+    <style type="text/css">
+    body {
+        width:100%;
+        margin:0;
+        background: #a3e8ff;
+        font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        color: #979797;
+    }
+    div {
+        margin:0;
+    }
+    .grid_1 {
+        width: 6.5%;
+    }
+    .grid_2 {
+        width: 15%;
+    }
+    .grid_3 {
+        width: 23.5%;
+    }
+    .grid_4 {
+        width: 32%;
+        float: left;
+        display: block;
+    }
+    .grid_5 {
+        width: 40.5%;
+    }
+    .grid_6 {
+        width: 49%;
+    }
+    .grid_7 {
+        width: 57.5%;
+    }
+    .grid_8 {
+        width: 66%;
+    }
+    .grid_9 {
+        width: 74.5%;
+    }
+    .grid_10 {
+        width: 83%;
+    }
+    .grid_11 {
+        width: 91.5%;
+    }
+    .grid_12 {
+        width: 100%;
+    }
+    .grid_1, .grid_2, .grid_3, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12 {
+        margin: 0 0% 1% 1%;
+        float: left;
+        display: block;
+    }
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        overflow-x: hidden;
+    }
+    .clear {
+        clear:both;
+        display:block;
+        overflow:hidden;
+        visibility:hidden;
+        width:0;
+        height:0
+    }
+    .clearfix:after {
+        clear:both;
+        content:' ';
+        display:block;
+        font-size:0;
+        line-height:0;
+        visibility:hidden;
+        width:0;
+        height:0
+    }
+    img.grid_4 {
+        margin-top: 16px;
+    }
+    .grid_8 > p {
+        font-size: 16pt;
+    }
+    h1 {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 26pt;
+    }
+    ul {
+        margin-bottom: 53px;
+    }
+    li {
+        font-size: 16pt;
+        margin-bottom:16px;
+    }
+    .left {
+        height:16px;
+    }
+    * html .clearfix, *:first-child+html .clearfix {
+        zoom:1
+    }
+    @media screen and (max-width:680px) {
+        .grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12 {
+            width: 85%;
+            margin-left: 7.5%;
+        }
+        @media screen and (max-width:450px) {
+            .grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12 {
+                width: 95%;
+                margin-left: 2.5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container clearfix">
+        <img src="/subpages/img/site_logo.png" class='grid_4'></img>
+        <div class='grid_8'>
+            <p>ViewFrames is a lightweight JavaScript framework, which treats iframes as a first class citizen of the web. ViewFrames allows for an iframe based MVC pattern, which facilitates painless and preformant one page applications.</p>
+
+            <p>In addition, viewFrames fixes many of the problems of iframes by matching the features provided by the ‘seamless’ iframe attribute, which has failed to gain traction on critical browsers.</p>
+        </div>
+        <h1 class='grid_12'>Why viewFrames?</h1>
+        <div class='grid_4 left'></div>
+        <div class='grid_8 '>
+            <ul>
+                <li>Iframes are sandboxed</li>
+                <li>Quickly develop your controller and views</li>
+                <li>Avoid conflicts with parent page</li>
+                <li>Good browser support</li>
+            </ul>
+        </div>
+        <h1 class='grid_4'>Features</h1>
+        <div class='grid_9'>
+            <h2>Manage your page's history</h2>
+            <p>Push history events when changing views, and for diffrent application states.</p>
+            <h2>Define routes for your views</h2>
+            <p>ViewFrames has a built in routing system which handles page actions, and events. Routes can be specified or implied.</p>
+            <h2>Makes the iframe seemless</h2>
+            <p>ViewFrames matches many of the features preposed by the <a href='http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#attr-iframe-seamless'>seemless iframe attribute.</a> This allows you to create iframes which your users will never even know are there.</p>
+
+        </div>
+
+
+    </div>
+</body>
+
+</html>

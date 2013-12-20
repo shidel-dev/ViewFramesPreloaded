@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>viewFrames documentation</title>
+    <script type="text/javascript" src="shCore.js"></script>
+    <script type="text/javascript" src="shBrushJScript.js"></script>
+    <link href="shCore.css" rel="stylesheet" type="text/css" />
+    <link href="shThemeDefault.css" rel="stylesheet" type="text/css" />
+    <base target="_parent">
+    <style type="text/css">
+    body {
+        width:100%;
+        margin:0;
+        background: #F1F1F1;
+        font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        color: #5C5959;
+        ;
+    }
+    div {
+        margin:0;
+    }
+    .grid_1 {
+        width: 6.5%;
+    }
+    .grid_2 {
+        width: 15%;
+    }
+    .grid_3 {
+        width: 23.5%;
+    }
+    .grid_4 {
+        width: 32%;
+        float: left;
+        display: block;
+    }
+    .grid_5 {
+        width: 40.5%;
+    }
+    .grid_6 {
+        width: 49%;
+    }
+    .grid_7 {
+        width: 57.5%;
+    }
+    .grid_8 {
+        width: 66%;
+    }
+    .grid_9 {
+        width: 74.5%;
+    }
+    .grid_10 {
+        width: 83%;
+    }
+    .grid_11 {
+        width: 91.5%;
+    }
+    .grid_12 {
+        width: 100%;
+    }
+    .grid_1, .grid_2, .grid_3, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12 {
+        margin: 0 0% 1% 1%;
+        float: left;
+        display: block;
+    }
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        overflow-x: hidden;
+    }
+    .clear {
+        clear:both;
+        display:block;
+        overflow:hidden;
+        visibility:hidden;
+        width:0;
+        height:0
+    }
+    .clearfix:after {
+        clear:both;
+        content:' ';
+        display:block;
+        font-size:0;
+        line-height:0;
+        visibility:hidden;
+        width:0;
+        height:0
+    }
+    h1 {
+        font-size: 27pt;
+        border-bottom: 4px solid;
+        width:100%;
+    }
+
+    .box{
+        width: 50%;
+        background-color: #FFF;
+    }
+    @media screen and (max-width:680px) {
+        .grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12,.box {
+            width: 85%;
+            margin-left: 7.5%;
+        }
+        @media screen and (max-width:450px) {
+            .grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12,.box {
+                width: 95%;
+                margin-left: 2.5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container clearfix">
+        <h1>Usage</h1>
+<p>Include the viewFrames.js file in your parent page.</p>
+
+<p> Then create an iframe element in your html and give it an id. </p>
+        <pre class="brush: js">
+
+        &ltscript src='viewFrames.js'>&lt/script>
+    
+        &ltbody>
+            &ltiframe id="viewFrame">
+            &lt/iframe>
+        &lt/body>
+
+</pre>
+
+<p>You must then call view.create(), passing in a setup object which will define the behavior of the application.</p>
+<p> The setup object will be covered in more depth below. The example shows the object used on this site!</p>
+     <pre class="brush: js">
+
+        view.create({
+            "view": "viewFrame",
+            "index": {
+                "name": "about",
+                "location": "subpages/about.html"
+            },
+            "path": "subpages",
+            "exceptions": {
+                "documentation": "/subpages/docs.html",
+             },
+            "autoSize": true
+        })
+
+</pre>
+       <h1>Conventions</h1>
+<p>There are three sources of control when using viewFrames. They are the setup object, handles, and built in methods.</p>
+
+<p>The setup object will define the routing and the behavior of your application.</p>
+
+<p>Handles are simply elements which you give a class of 'handle' to.  These elements handle clicks, and touches triggering a change in the view. These elements will also have a data-link property which will relate implicitly to the name of the desired html file, or it's relationship can be explicitly defined in the setup object.</p>
+
+<p>In addition viewFrames provides methods to take a finer control of some behaviors, and allowing history and views to be minipulated by any event.</p>
+
+
+
+<h1>Setup Object</h1>
+<p>The setup object will define the behavior of your views and routing to diffrent files on your server.</p>
+<p>This object is standard javascript object notation, and must be passed to the view.create() method.</p>
+<p>A number of atttributes need to be supplied with this object, in order to define your views.</p>
+<div class='box'>
+    <h2>view</h2>
+    <p>The view attribute is for defining the iframe that will act as your view. It is looking for the id of your iframe element.</p>
+    <p>"view":"yourIframesId"</p>
+</div>
+<div class='box'>
+    <h2>index</h2>
+    <p>The index attribute is defines the case where the parent page is requested without a hash in the url. Think of this as a fall backpage, and also an index/landing page.</p>
+    <p>This attribute takes an object which takes "name", and "location" attributes.</p>
+    <p>"name" relates to how the location hash will read.</p>
+    <p>"location" is a local or full path to the desired html file</p>
+    </br>
+    <p>"index":{ </p>
+    <p>"name": "about",</p>   
+    <p>"location": "path/toFile.html"</p>
+    <p>}</p>
+</div>
+<div class='box'>
+    <h2>path</h2>
+    <p>"path" will show viewFrames where to find you views if the action of the given handle is implicit.</p>
+    <p>"path":"the path to your collection of views"</p>
+</div>
+<div class='box'>
+    <h2>exceptions</h2>
+    <p>Exceptions will define handles which do not match the implicit routing pattern.  </p>
+    <p>This attribute takes an object which contains a key value pair relating to a data-link attribute and a path to find the related file.</p>
+    </br>
+    <p>"exceptions":{ </p>
+    <p>"data-link attribute": "path/tofile.html"</p>   
+    <p>}</p>
+</div>
+<div class='box'>
+    <h2>autoSize</h2>
+    <p>autoSize is a booleen which states if you wish for the parent pages to resize you iframe to match the content inside.  This gets rid of scroll bars in your iframes, and makes your iframes look like part of the page.</p>
+    <p>"autoSize":true/false</p>
+</div>
+</br>
+
+
+
+<h1>Handles</h1>
+
+<p>viewFrames looks for elements with a class of 'handle'. This class signifies that you would like clicks on this elemment to be handled, and most likely change the view.</p>
+
+<p>Along with the having a class of 'handle', these elements must have a data-link attribute which matches up with to the view you want to link to, as defined in the routes object, or relating matching the file name at the given path. The below code shows how I have set up this site.</p>
+    <pre class="brush: js">
+         &ltul>
+            &ltli>
+                &lta class='handle' data-link='about'>About &lt/a>
+            &lt/li>
+            &ltli>
+                &lta class='handle' data-link='docs'>Documentation &lt/a>
+            &lt/li>
+            &ltli>
+                &lta class='handle' data-link='download'>Download &lt/a>
+            &lt/li>
+        &lt/ul>
+
+</pre>
+
+<h1>Methods</h1>
+<div class='box'>
+    <h2>view.create()</h2>
+    <p>Creates your view and defines it's id, routes, and behavior.</p>
+</div>
+
+<div class='box'>
+    <h2>view.update(data-link,booleen)</h2>
+    <p>view.update() will change your view based on the data-link string. This method also requires a booleen value stating if you would like to update the history by pushing a location hash.</p>
+</div>
+
+
+<div class='box'>
+    <h2>view.getHash()</h2>
+    <p>Returns the current location hash value as a string removing the actual hash symbol.</p>
+</div>
+
+<div class='box'>
+    <h2>view.setHash(string)</h2>
+    <p>Allows for a history event to be addded, without the changing of the view. Expects a string without the hash symbol.</p>
+</div>
+
+<div class='box'>
+    <h2>view.sizeFrame(iframe's id)</h2>
+    <p>Will resize the given iframe's height to match it's content's height.</p>
+</div>
+
+</br>
+</br>
+
+<p> The diffrent aspects of the setup object can be changed on the fly.</p>
+<div class='box'>
+    <h2>view.setup.property.subproperty = value</h2>
+    <p>subproperty is optional depending if the property has inner properties.</p>
+</div>
+
+<p>Also setup values can be returned</p>
+<div class='box'>
+    <h2>view.setup.property.subproperty</h2>
+    <p>subproperty is optional depending if the property has inner properties.</p>
+</div>
+
+<h1>Child Snippit, and Parent Styles</h1>
+<p>There are two recommended (but not nessesary) pieces of code for use inside your views.</p>
+<p>First you can make links alot easier by putting a base tag with the target attribute set to'_parent'.  This will ensure that any links will redirect the parent page, and not just the iframe. If you would like to have links that change only the iframe the you can set that element's target as '_self'</p>
+
+<p>Another consideration you are going to want to make is handling how google will link to your subpages. Google will many times not have the hash url(like : example.com/#page) but will instead link to that pages actually url(like:example.com/page.html). The problem with this is that when a link like this is followed it will just display the view without the parent page around it. to fix this I recommend that you use the small piece of javaScript show below in the head of your document.</P>
+
+
+    <pre class="brush: js">
+       &ltbase target="_parent"> //makes all links redirect the parent page
+
+
+       &ltscript> 
+            if ( window.self === window.top ){
+                window.location.href = "http://www.example.com/#hash" 
+            }
+       &lt/script>
+
+
+
+
+</pre>
+
+<p> If you want to have iframes that are seemless, and look like they are part of the page. I recommend using the following style</p>
+
+    <pre class="brush: js">
+      #iframeId {
+        border:0;
+        width:desired_width;
+        min-height: fallback height in case of ie 7 and below;
+      }
+
+
+
+
+</pre>
+
+
+ 
+
+
+</div>
+
+<script type="text/javascript">SyntaxHighlighter.all()</script>    
+</body>
+
+</html>
