@@ -94,7 +94,11 @@ var view = {
 
     sizeFrame: function(elem) {
         var el = document.getElementById(elem);
-        el.height = (el.contentWindow.document.body.scrollHeight) + "px";
+        el.height = Math.max(
+        el.body.scrollHeight, el.documentElement.scrollHeight,
+        el.body.offsetHeight, el.documentElement.offsetHeight,
+        el.body.clientHeight, el.documentElement.clientHeight
+    )+ "px";
     }
 
 };
