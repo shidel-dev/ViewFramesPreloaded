@@ -19,7 +19,7 @@ var view = {
                     } else if (handles[i].attachEvent) {
                         handles[i].attachEvent('onclick', view.trigger);
                     }
-                }
+                } 
 
                 window.onhashchange = function() {
                     if (flag) {
@@ -36,7 +36,7 @@ var view = {
     },
 
     update: function(hashValue, flag) {
-        var temp = document.createElement("iframe"),
+        var temp = document.createElement("IFRAME"),
             frame = document.getElementById(view.setup.view),
             parent = frame.parentNode;
         if (view.setup.exceptions[hashValue]) {
@@ -46,6 +46,8 @@ var view = {
         }
         temp.id = view.setup.view;
 
+        temp.frameBorder = "no";
+      
         parent.replaceChild(temp, frame);
 
         if (view.setup.autoSize == true) {
@@ -94,11 +96,7 @@ var view = {
 
     sizeFrame: function(elem) {
         var el = document.getElementById(elem);
-        el.height = Math.max(
-        el.body.scrollHeight, el.documentElement.scrollHeight,
-        el.body.offsetHeight, el.documentElement.offsetHeight,
-        el.body.clientHeight, el.documentElement.clientHeight
-    )+ "px";
+        el.height = (el.contentWindow.document.body.scrollHeight) + "px";
     }
 
 };
