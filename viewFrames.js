@@ -1,4 +1,5 @@
 var view = {
+
     create: function(setup) {
         view.setup = setup;
         var readyStateCheckInterval = setInterval(function() {
@@ -6,8 +7,8 @@ var view = {
                 clearInterval(readyStateCheckInterval);
                 var hashValue = view.getHash(),
                     handles = document.querySelectorAll('.handle'),
-                    i,
-                    flag = false;
+                    i;
+                view.flag = false;
                 if (hashValue === '') {
                     view.update(setup.index.name, true);
                 } else {
@@ -19,13 +20,13 @@ var view = {
                     } else if (handles[i].attachEvent) {
                         handles[i].attachEvent('onclick', view.trigger);
                     }
-                } 
+                }
 
                 window.onhashchange = function() {
-                    if (flag) {
+                    if (view.flag) {
                         view.update(view.getHash(), false);
                     } else {
-                        flag = true;
+                        view.flag = true;
                     }
                 };
 
@@ -35,7 +36,7 @@ var view = {
         }, 10);
     },
 
-    update: function(hashValue, flag) {
+    update: function(hashValue, bool) {
         var temp = document.createElement("IFRAME"),
             frame = document.getElementById(view.setup.view),
             parent = frame.parentNode;
@@ -44,34 +45,44 @@ var view = {
         } else {
             temp.src = view.setup.path + '/' + hashValue + '.html' || view.setup.index.location
         }
+        var src = temp.src;
         temp.id = view.setup.view;
 
         temp.frameBorder = "no";
-      
+
         parent.replaceChild(temp, frame);
 
         if (view.setup.autoSize == true) {
             temp.contentWindow.onresize = function() {
                 view.sizeFrame(view.setup.view);
             };
-            if (temp.contentWindow.readyState == "complete") {
+        }
+
+        if (temp.addEventListener) {
+            temp.addEventListener("load", function() {
                 view.sizeFrame(view.setup.view);
-            } else {
-                if (temp.addEventListener) {
-                    temp.contentWindow.addEventListener("load", function() {
-                        setTimeout(view.sizeFrame(view.setup.view), 0);
-                    });
-                } else if (temp.attachEvent) {
-                    temp.contentWindow.attachEvent("onload", function() {
-                        view.sizeFrame(view.setup.view)
-                    });
+                if (view.lasUrl != temp.src){
+                    view.priv.updateHash(temp.src);
                 }
 
-            }
+            });
+        } else if (temp.attachEvent) {
+            temp.attachEvent("onload", function() {
+                view.sizeFrame(view.setup.view)
+                if (view.lasUrl != temp.src){
+                    view.priv.updateHash(temp.src);
+                }
+            });
         }
-        if (flag) {
+
+
+
+        if (bool) {
             view.setHash(hashValue);
         }
+
+        view.lasUrl = temp.src;
+
     },
 
     trigger: function(event) {
@@ -90,13 +101,24 @@ var view = {
     },
 
     setHash: function(str) {
-        flag = false;
+        view.flag = false;
         window.location.hash = str;
     },
 
     sizeFrame: function(elem) {
         var el = document.getElementById(elem);
         el.height = (el.contentWindow.document.body.scrollHeight) + "px";
+    },
+
+    priv: {
+
+        updateHash: function(url){
+            
+            view.flag = false;
+            window.location.hash=url.match(/([^\/]+)(?=\.\w+$)/)[0]
+            console.log("Url: " + url + "  Hash: " + url.match(/([^\/]+)(?=\.\w+$)/)[0])
+            view.flag = true;
+        }
     }
 
 };
