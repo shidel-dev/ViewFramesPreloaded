@@ -50,18 +50,20 @@ var view = {
 
         temp.frameBorder = "no";
 
+
+
         parent.replaceChild(temp, frame);
 
         if (view.setup.autoSize == true) {
-            temp.contentWindow.onresize = function() {
-                view.sizeFrame(view.setup.view);
-            };
+            temp.contentWindow.addEventListener('resize', function(event){
+              view.sizeFrame(view.setup.view);  
+            });
         }
 
         if (temp.addEventListener) {
             temp.addEventListener("load", function() {
                 view.sizeFrame(view.setup.view);
-                if (view.lasUrl != temp.src){
+                if (view.lasUrl != temp.src) {
                     view.priv.updateHash(temp.src);
                 }
 
@@ -69,7 +71,7 @@ var view = {
         } else if (temp.attachEvent) {
             temp.attachEvent("onload", function() {
                 view.sizeFrame(view.setup.view)
-                if (view.lasUrl != temp.src){
+                if (view.lasUrl != temp.src) {
                     view.priv.updateHash(temp.src);
                 }
             });
@@ -106,16 +108,18 @@ var view = {
     },
 
     sizeFrame: function(elem) {
+
         var el = document.getElementById(elem);
+        console.log('called'+el.contentWindow.document.body.scrollHeight)
         el.height = (el.contentWindow.document.body.scrollHeight) + "px";
     },
 
     priv: {
 
-        updateHash: function(url){
-            
+        updateHash: function(url) {
+
             view.flag = false;
-            window.location.hash=url.match(/([^\/]+)(?=\.\w+$)/)[0]
+            window.location.hash = url.match(/([^\/]+)(?=\.\w+$)/)[0]
             console.log("Url: " + url + "  Hash: " + url.match(/([^\/]+)(?=\.\w+$)/)[0])
             view.flag = true;
         }
