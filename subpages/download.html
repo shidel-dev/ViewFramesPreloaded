@@ -9,7 +9,7 @@
     body {
         width:100%;
         margin:0;
-        background: #F1F1F1;
+        background: #fff;
         font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
         color: #5C5959;
         ;
@@ -17,53 +17,92 @@
     div {
         margin:0;
     }
+    .half {
+        width: 49%;
+        display: inline-block;
+        margin-left: .5%;
+        margin-top: -1px;
+    }
+    .half:nth-of-type(1) {
+        border-right:solid 2px;
+        margin-top: -0px;
+    }
     .click {
         position: relative;
-        width: 195px;
+        width: 206px;
         background-color: #76F895;
         padding: 15px;
         border-radius: 8px;
         left: 50%;
         text-align: center;
-        margin-left: -108.5px;
+        margin-left: -112.5px;
         margin-top: 30px;
-        margin-bottom:30px;
-        cursor:pointer;
+        margin-bottom: 30px;
+        cursor: pointer;
+        display: inline-block;
     }
-
-    .click:nth-of-type(1){margin-top:100px;}
-    .click:nth-of-type(3){margin-bottom:400px;}
-    #contain{
-    	width: 90%;
-		margin: auto;
+    .half:nth-of-type(2) > .click {
+        line-height: 200%;
+    }
+    .half > .click:nth-of-type(2) {
+        margin-bottom: 0;
+    }
+    .half:nth-of-type(2) {
+        position: absolute;
+    }
+    #contain {
+        width: 90%;
+        margin: auto;
         display:none;
-						}
+    }
     a {
         text-decoration: none;
         color: #000;
     }
-    h1 {
+    p {
         width:100%;
         text-align: center;
     }
- 
-        @media screen and (max-width:450px) {
-          
-            
+    h1 {
+        width:100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    @media screen and (max-width:622px) {
+        .half {
+            width:100%;
+            position:relative;
+            margin: 0;
+            border:none;
         }
+        .half:nth-of-type(1) {
+            border-bottom: 2px solid;
+            margin-bottom: 15px;
+        }
+        .half > .click:nth-of-type(2) {
+            margin-bottom: 50px;
+        }
+    }
     </style>
 </head>
 
 <body>
+    <div class='half'>
+        <h1>Downloads</h1>
+        <a class="click" href="../viewFrames.js" download>Download Full Source Code</a>
 
-    <div class="click"><a href="../viewFrames.js" download>Download Source Code</a>
+        <p>or</p>
+        <a class="click" download>Download Minimized Source Code</a>
+
     </div>
-    
-    <div class="click"><a id='show' download>Download Minimized Source Code</a>
+    <div class='half'>
+        <h1>Have a Look</h1>
+        <a class="click" href='source.html' target='_self'>View in Browser</a>
+
+        <p>or</p>
+        <a class="click"  href='https://github.com/shidel-dev/viewFrames'>View on GitHub</a>
+
     </div>
-     <div class="click"><a id='show' href='https://github.com/shidel-dev/viewFrames'>View on GitHub</a>
-    </div>
-   
 </body>
 
 </html>
