@@ -21,62 +21,12 @@
     div {
         margin:0;
     }
-    .grid_1 {
-        width: 6.5%;
-    }
-    .grid_2 {
-        width: 15%;
-    }
-    .grid_3 {
-        width: 23.5%;
-    }
-    .grid_4 {
-        width: 32%;
-        float: left;
-        display: block;
-    }
-    .grid_5 {
-        width: 40.5%;
-    }
-    .grid_6 {
-        width: 49%;
-    }
-    .grid_7 {
-        width: 57.5%;
-    }
-    .grid_8 {
-        width: 66%;
-    }
-    .grid_9 {
-        width: 74.5%;
-    }
-    .grid_10 {
-        width: 83%;
-    }
-    .grid_11 {
-        width: 91.5%;
-    }
-    .grid_12 {
-        width: 100%;
-    }
-    .grid_1, .grid_2, .grid_3, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12 {
-        margin: 0 0% 1% 1%;
-        float: left;
-        display: block;
-    }
+    
     .container {
-        width: 100%;
-        max-width: 1200px;
+        width: 95%;
         margin: auto;
         overflow-x: hidden;
-    }
-    .clear {
-        clear:both;
-        display:block;
-        overflow:hidden;
-        visibility:hidden;
-        width:0;
-        height:0
+        margin-left: 2.5%;
     }
     .clearfix:after {
         clear:both;
@@ -97,18 +47,20 @@
     .box{
         width: 50%;
         background-color: #FFF;
+        overflow-wrap: break-word;
     }
     @media screen and (max-width:680px) {
-        .grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12,.box {
+       .box {
             width: 85%;
             margin-left: 7.5%;
         }
-        @media screen and (max-width:450px) {
-            .grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12,.box {
+    }
+    @media screen and (max-width:450px) {
+        .box {
                 width: 95%;
                 margin-left: 2.5%;
-            }
         }
+    }
     </style>
 </head>
 
