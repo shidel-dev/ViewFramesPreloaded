@@ -4,6 +4,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>About viewFrames</title>
+	
+	<base target="_parent"> 
+ 
+ 
+	<script> 
+		if ( window.self === window.top ){
+			window.location.href = "../index.html"
+		}
+	</script>
 
 
     <base target="_parent">

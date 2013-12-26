@@ -8,7 +8,14 @@
     <script type="text/javascript" src="shBrushJScript.js"></script>
     <link href="shCore.css" rel="stylesheet" type="text/css" />
     <link href="shThemeDefault.css" rel="stylesheet" type="text/css" />
-    <base target="_parent">
+    <base target="_parent">  
+ 
+	<script> 
+		if ( window.self === window.top ){
+			window.location.href = "../index.html"
+		}
+	</script>
+	
     <style type="text/css">
     body {
         width:100%;
