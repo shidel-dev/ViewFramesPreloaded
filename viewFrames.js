@@ -29,9 +29,6 @@ var view = {
                         view.flag = true;
                     }
                 };
-
-
-
             }
         }, 10);
     },
@@ -55,24 +52,28 @@ var view = {
         parent.replaceChild(temp, frame);
 
         if (view.setup.autoSize == true) {
-            temp.contentWindow.addEventListener('resize', function(event){
-              view.sizeFrame(view.setup.view);  
+            temp.contentWindow.addEventListener('resize', function(event) {
+                view.sizeFrame(view.setup.view);
             });
         }
 
         if (temp.addEventListener) {
             temp.addEventListener("load", function() {
                 view.sizeFrame(view.setup.view);
-                if (view.lasUrl != temp.src) {
-                    view.priv.updateHash(temp.src);
+                var cur_url = temp.contentWindow.location.href;
+                if (cur_url != src) {
+                    view.flag = false;
+                    view.setHash(cur_url.match(/([^\/]+)(?=\.\w+$)/)[0]);
                 }
 
             });
         } else if (temp.attachEvent) {
             temp.attachEvent("onload", function() {
                 view.sizeFrame(view.setup.view)
-                if (view.lasUrl != temp.src) {
-                    view.priv.updateHash(temp.src);
+                var cur_url = temp.contentWindow.location.href;
+                if (cur_url!= src) {
+                    view.flag = false;
+                    view.setHash(cur_url.match(/([^\/]+)(?=\.\w+$)/)[0]);
                 }
             });
         }
@@ -82,9 +83,6 @@ var view = {
         if (bool) {
             view.setHash(hashValue);
         }
-
-        view.lasUrl = temp.src;
-
     },
 
     trigger: function(event) {
@@ -110,19 +108,6 @@ var view = {
     sizeFrame: function(elem) {
 
         var el = document.getElementById(elem);
-        console.log('called'+el.contentWindow.document.body.scrollHeight)
         el.height = (el.contentWindow.document.body.scrollHeight) + "px";
-    },
-
-    priv: {
-
-        updateHash: function(url) {
-
-            view.flag = false;
-            window.location.hash = url.match(/([^\/]+)(?=\.\w+$)/)[0]
-            console.log("Url: " + url + "  Hash: " + url.match(/([^\/]+)(?=\.\w+$)/)[0])
-            view.flag = true;
-        }
     }
-
 };
