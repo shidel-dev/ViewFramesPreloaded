@@ -2,6 +2,8 @@ var view = {
 
     create: function(setup) {
         view.setup = setup;
+		view.buffered = false;
+        view.preHash = "main";
         var readyStateCheckInterval = setInterval(function() {
             if (document.readyState === "complete") {
                 clearInterval(readyStateCheckInterval);
@@ -29,11 +31,50 @@ var view = {
                         view.flag = true;
                     }
                 };
+				
+				//Wait until the main frame is finished loading before loading sub-pages.
+				document.getElementById(routes.view).onload = function() {
+					view.buffered = true;
+        			for (var i = 0; i < handles.length; i++){						
+						var mainFrame = document.getElementById(routes.view),
+							frame = mainFrame.cloneNode(true),
+							hash = handles[i].getAttribute('data-link');
+							
+						frame.id = hash;
+						frame.class = "hiddenFrame"
+						frame.src = routes.exceptions[hash];
+						frame.style.display = "none";
+						frame.style.width = "100%" //Temporary solution!
+						frame.style.height = "100vh"; //Temporary solution! 
+						document.body.appendChild(frame);					
+					}    
+    			};
+				
             }
         }, 10);
     },
 
     update: function(hashValue, bool) {
+		
+		if (!flag && view.buffered) return;
+		
+		//If frames should be pre-buffered, and the Iframe is loaded.
+    	if (view.routes.buffer && view.buffered && flag){
+    		if (typeof(hashValue) != 'undefined' && hashValue != null){
+    			console.log("Hashed Url: " + view.routes.exceptions[hashValue]);
+				var newFrame = document.getElementById(hashValue);
+				console.log(view.routes.view);
+				document.getElementById(view.routes.view).style.display = "none";
+				document.getElementById(view.routes.view).id = view.preHash;								
+				view.preHash = hashValue;
+				newFrame.style.display = "block";
+				newFrame.id = view.routes.view;
+				view.setHash(hashValue);
+				return;    		
+    		}
+    	}
+		
+	
         var temp = document.createElement("IFRAME"),
             frame = document.getElementById(view.setup.view),
             parent = frame.parentNode;
