@@ -37,8 +37,8 @@ var view = {
         var temp = document.createElement("IFRAME"),
             frame = document.getElementById(view.setup.view),
             parent = frame.parentNode;
-        if (view.setup["exceptions"]["hashValue"]) {
-            temp.src = view.setup["exceptions"]["hashValue"];
+        if (view.setup.exceptions[hashValue]) {
+            temp.src = view.setup.exceptions[hashValue];
         } else {
             temp.src = view.setup.path + '/' + hashValue + '.html' || view.setup.index.location
         }
