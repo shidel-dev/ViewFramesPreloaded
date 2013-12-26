@@ -37,8 +37,8 @@ var view = {
         var temp = document.createElement("IFRAME"),
             frame = document.getElementById(view.setup.view),
             parent = frame.parentNode;
-        if (view.setup.exceptions[hashValue]) {
-            temp.src = view.setup.exceptions[hashValue];
+        if (view.setup["exceptions"]["hashValue"]) {
+            temp.src = view.setup["exceptions"]["hashValue"];
         } else {
             temp.src = view.setup.path + '/' + hashValue + '.html' || view.setup.index.location
         }
@@ -51,7 +51,7 @@ var view = {
 
         parent.replaceChild(temp, frame);
 
-        if (view.setup.autoSize == true) {
+        if (view.setup["autoSize"] == true) {
             temp.contentWindow.addEventListener('resize', function(event) {
                 view.sizeFrame(view.setup.view);
             });
@@ -66,7 +66,7 @@ var view = {
                     view.setHash(cur_url.match(/([^\/]+)(?=\.\w+$)/)[0]);
                 }
 
-            });
+            }, false);
         } else if (temp.attachEvent) {
             temp.attachEvent("onload", function() {
                 view.sizeFrame(view.setup.view)
